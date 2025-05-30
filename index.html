@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rohan Shrestha | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #111;
+      color: white;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    header {
+      background: #e60023;
+      padding: 2rem;
+      text-align: center;
+    }
+    .profile-pic-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .profile-pic-animated {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      object-fit: cover;
+      object-position: top;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      animation: floatPic 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes floatPic {
+      0% { transform: translateY(0px) scale(1);}
+      100% { transform: translateY(-18px) scale(1.04);}
+    }
+    header h1 {
+      margin-top: 1rem;
+    }
+    .section {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    .about, .links {
+      margin-top: 2rem;
+      animation: popIn 1s ease forwards;
+    }
+    .links a {
+      display: inline-block;
+      margin-right: 1rem;
+      color: #e60023;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+    .links a:hover {
+      transform: scale(1.1);
+    }
+    .middle-text {
+      margin: 3rem auto;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    footer {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes popGmail {
+      0% { transform: scale(0.7) translateY(30px); opacity: 0; }
+      60% { transform: scale(1.1) translateY(-8px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); }
+    }
+    .gmail-pop {
+      background: #fff;
+      color: #e60023;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 4px 16px rgba(230,0,35,0.12);
+      animation: popGmail 1.2s cubic-bezier(.68,-0.55,.27,1.55) both;
+      transition: transform 0.2s;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .gmail-pop:hover {
+      transform: scale(1.08) rotate(-2deg);
+      background: #e60023;
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      header img {
+        width: 80px;
+        height: 80px;
+      }
+      .middle-text {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Bank QR styles */
+    .bank-qr-btn {
+      background: #e60023;
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 18px;
+      margin-left: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .bank-qr-btn:hover {
+      background: #fff;
+      color: #e60023;
+      border: 1px solid #e60023;
+    }
+
+    .bank-qr-popup {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.65);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.4s;
+    }
+    .bank-qr-popup.active {
+      display: flex;
+    }
+    .bank-qr-content {
+      background: linear-gradient(135deg, #fffbe7 0%, #ffe3ec 100%);
+      color: #222;
+      border-radius: 18px;
+      padding: 2rem 1.5rem 1.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      min-width: 280px;
+      animation: hurryPop 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+      border: 2px dashed #e60023;
+      overflow: hidden;
+    }
+    .bank-qr-img {
+      width: 160px;
+      height: 160px;
+      margin: 1rem 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(230,0,35,0.13);
+      /* animation removed for stable image */
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #e60023;
+      font-weight: bold;
+    }
+    .confetti {
+      position: absolute;
+      font-size: 2.2rem;
+      top: 60%;
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: 2;
+      animation: confettiUp 2.5s infinite linear;
+    }
+    .confetti-left {
+      left: 18%;
+      animation-delay: 0s;
+    }
+    .confetti-right {
+      right: 18%;
+      animation-delay: 1.2s;
+    }
+    @keyframes hurryPop {
+      0% { transform: scale(0.5) rotate(-12deg); opacity: 0; }
+      60% { transform: scale(1.1) rotate(7deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0); }
+    }
+    @keyframes shakeHurry {
+      0% { transform: rotate(-3deg) scale(1.03);}
+      100% { transform: rotate(3deg) scale(1);}
+    }
+    @keyframes confettiUp {
+      0% {
+        transform: translateY(0) scale(1) rotate(-10deg);
+        opacity: 0.85;
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-80px) scale(1.15) rotate(10deg);
+      }
+      100% {
+        transform: translateY(-120px) scale(1.1) rotate(-10deg);
+        opacity: 0;
+      }
+    }
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 1rem;
+      color: #e60023;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+    .social-icon:hover {
+      transform: scale(1.1);
+    }
+    .icon-bg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      margin-right: 8px;
+      background: #eee;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="profile-pic-wrapper">
+      <img src="WhatsApp Image 2025-05-28 at 23.26.06_3b2d73e3.jpg" alt="Rohan Shrestha" class="profile-pic-animated">
+    </div>
+    <h1>Rohan Shrestha (Vaidya)</h1>
+    <p>BSc.CSIT Student | Philosopher in Progress | Techie by Passion</p>
+  </header>
+
+  <div class="section about">
+    <h2>About Me</h2>
+    <p>
+      Hey there! 👋 I’m Rohan, born in Dharan, raised by Wi-Fi signals and curiosity. Currently studying BSc.CSIT and trying to survive both assignments and existential crises.<br><br>
+      I vibe with philosophy (because Plato is better than procrastination), write code fueled by caffeine and overly friendly AI, treat music like a part-time job, and yes, I’m passionately committed to the ancient art of sleeping. 💤 Oh, and forgetting things? That’s my natural talent, I’m basically a pro at losing my own thoughts!
+    </p>
+  </div>
+
+  <div class="section links">
+    <h2>Connect with Me</h2>
+    <a href="https://www.facebook.com/Rohanshrestha0003/" target="_blank" class="social-icon">
+      <span class="icon-bg" style="background:#1877F3;">
+        <!-- Facebook SVG -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0"/></svg>
+      </span>
+      Facebook
+    </a>
+    <a href="https://www.instagram.com/rohanshrestha03/" target="_blank" class="social-icon">
+      <span class="icon-bg" style="background:#E4405F;">
+        <!-- Instagram SVG -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608C4.515 2.497 5.782 2.225 7.148 2.163 8.414 2.105 8.794 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.13 4.659.388 3.678 1.37c-.98.98-1.238 2.092-1.297 3.373C2.013 5.668 2 6.077 2 12c0 5.923.013 6.332.072 7.613.059 1.281.317 2.393 1.297 3.373.98.98 2.092 1.238 3.373 1.297C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.317 3.373-1.297.98-.98 1.238-2.092 1.297-3.373.059-1.281.072-1.69.072-7.613 0-5.923-.013-6.332-.072-7.613-.059-1.281-.317-2.393-1.297-3.373-.98-.98-2.092-1.238-3.373-1.297C15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </span>
+      Instagram
+    </a>
+  </div>
+
+  <div class="section tiktok-fun" style="text-align:center; margin-top:2rem;">
+    <h2 style="margin-bottom:1rem;">Find Me on TikTok (Warning: May cause sudden dance moves!)</h2>
+    <a href="https://www.tiktok.com/@rohanshrestha0003?is_from_webapp=1&sender_device=pc" 
+       target="_blank" 
+       class="social-icon tiktok-fun-icon">
+      <span class="icon-bg" style="background:#000;">
+        <!-- TikTok SVG -->
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="24" fill="#000"/>
+          <path d="M33.5 18.5c-2.5 0-4.5-2-4.5-4.5h-3v15.5a3.5 3.5 0 1 1-3.5-3.5v-3a6.5 6.5 0 1 0 6.5 6.5V17.5c1.2 1.7 3.2 3 5.5 3v-2z" fill="#fff"/>
+          <path d="M33.5 18.5c-2.5 0-4.5-2-4.5-4.5h-1.5v15.5a3.5 3.5 0 1 1-3.5-3.5v-1.5a6.5 6.5 0 1 0 6.5 6.5V17.5c1.2 1.7 3.2 3 5.5 3v-2z" fill="#25F4EE"/>
+          <path d="M33.5 18.5c-2.5 0-4.5-2-4.5-4.5h-1.5v15.5a3.5 3.5 0 1 1-3.5-3.5v-1.5a6.5 6.5 0 1 0 6.5 6.5V17.5c1.2 1.7 3.2 3 5.5 3v-2z" fill="#FE2C55" fill-opacity=".7"/>
+        </svg>
+      </span>
+      TikTok
+    </a>
+  </div>
+
+  <div class="section middle-text">
+    <h2 style="margin-bottom:1rem;">A Little More About Me (a.k.a. The Boring but Important Stuff)</h2>
+    <p>
+      I come from a nuclear family, and in my free time, I enjoy reading philosophy and listening to music. On the professional side, I'm a hardworking, self-motivated individual with effective communication skills and a fast learning capacity.<br><br>
+
+      My career objectives are twofold (or maybe more, if you read between the lines):<br>
+      👉 To find somewhere I truly belong, a place where I can grow, evolve, and maybe even become one of the mysterious forces that help it thrive, all while building a career that’s both successful and satisfying.<br>
+      🤞 To live life at its best and help others in the process, because sometimes the real journey is about the stories you collect and the people you uplift along the way.<br><br>
+
+      Thank you for your time to learn more about me!
+    </p>
+  </div>
+
+  <footer>
+    <span class="gmail-pop">
+      📧 rohanxtha970@gmail.com
+    </span>
+    <span class="bank-qr-btn">🏦 Show Bank QR</span>
+  </footer>
+
+  <div class="bank-qr-popup" id="bankQrPopup">
+    <div class="bank-qr-content">
+      <button class="close-btn" onclick="closeBankQr()">✖</button>
+      <h3>Scan, Pay &amp; Have Fun!</h3>
+      <img src="QR.jpg" alt="Bank QR" class="bank-qr-img">
+      <p style="font-size:0.95em;color:#888;">
+        (Or just admire viewing my beautiful QR!)
+      </p>
+    </div>
+  </div>
+
+  <style>
+    .gmail-pop {
+      background: #fff;
+      color: #e60023;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 4px 16px rgba(230,0,35,0.12);
+      animation: popGmail 1.2s cubic-bezier(.68,-0.55,.27,1.55) both;
+      transition: transform 0.2s;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .gmail-pop:hover {
+      transform: scale(1.08) rotate(-2deg);
+      background: #e60023;
+      color: #fff;
+    }
+    @keyframes popGmail {
+      0% { transform: scale(0.7) translateY(30px); opacity: 0; }
+      60% { transform: scale(1.1) translateY(-8px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); }
+    }
+  </style>
+
+  <script>
+    document.querySelector('.bank-qr-btn').onclick = function() {
+      document.getElementById('bankQrPopup').classList.add('active');
+    };
+    function closeBankQr() {
+      document.getElementById('bankQrPopup').classList.remove('active');
+    }
+    // Optional: Close popup on background click
+    document.getElementById('bankQrPopup').onclick = function(e) {
+      if (e.target === this) closeBankQr();
+    };
+  </script>
+</body>
+</html>
