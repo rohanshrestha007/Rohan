@@ -245,6 +245,17 @@
       background: #eee;
       box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(.68,-0.55,.27,1.55), transform 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+      will-change: opacity, transform;
+    }
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: none;
+    }
   </style>
 </head>
 <body>
@@ -256,7 +267,7 @@
     <p>BSc.CSIT Student | Philosopher in Progress | Techie by Passion</p>
   </header>
 
-  <div class="section about">
+  <div class="section about fade-in-section">
     <h2>About Me</h2>
     <p>
       Hey there! 👋 I’m Rohan, born in Dharan, raised by Wi-Fi signals and curiosity. Currently studying BSc.CSIT and trying to survive both assignments and existential crises.<br><br>
@@ -264,7 +275,7 @@
     </p>
   </div>
 
-  <div class="section links">
+  <div class="section links fade-in-section">
     <h2>Connect with Me</h2>
     <a href="https://www.facebook.com/Rohanshrestha0003/" target="_blank" class="social-icon">
       <span class="icon-bg" style="background:#1877F3;">
@@ -282,7 +293,7 @@
     </a>
   </div>
 
-  <div class="section tiktok-fun" style="text-align:center; margin-top:2rem;">
+  <div class="section tiktok-fun fade-in-section" style="text-align:center; margin-top:2rem;">
     <h2 style="margin-bottom:1rem;">Find Me on TikTok (Warning: May cause sudden dance moves!)</h2>
     <a href="https://www.tiktok.com/@rohanshrestha0003?is_from_webapp=1&sender_device=pc" 
        target="_blank" 
@@ -300,7 +311,7 @@
     </a>
   </div>
 
-  <div class="section middle-text">
+  <div class="section middle-text fade-in-section">
     <h2 style="margin-bottom:1rem;">A Little More About Me (a.k.a. The Boring but Important Stuff)</h2>
     <p>
       I come from a nuclear family, and in my free time, I enjoy reading philosophy and listening to music. On the professional side, I'm a hardworking, self-motivated individual with effective communication skills and a fast learning capacity.<br><br>
@@ -313,10 +324,18 @@
     </p>
   </div>
 
-  <footer>
-    <span class="gmail-pop">
+  <div class="section email-section" style="margin-top:2rem; text-align:left; max-width:800px; margin-left:auto; margin-right:auto;">
+    <h2 style="color:#fff; margin-bottom:0.7rem;">Email Me</h2>
+    <a href="mailto:rohanxtha970@gmail.com" class="gmail-pop custom-gmail">
       📧 rohanxtha970@gmail.com
-    </span>
+    </a>
+  </div>
+
+  <div style="background:#fffbe7; color:#e60023; padding:1em; border-radius:10px; margin:1em 0;">
+    <strong>Fun Fact:</strong> This website was born out of boredom, brainpower, and OFC AI magic, because sleep decided to ghost me.
+  </div>
+
+  <footer>
     <span class="bank-qr-btn">🏦 Show Bank QR</span>
   </footer>
 
@@ -325,9 +344,6 @@
       <button class="close-btn" onclick="closeBankQr()">✖</button>
       <h3>Scan, Pay &amp; Have Fun!</h3>
       <img src="QR.jpg" alt="Bank QR" class="bank-qr-img">
-      <p style="font-size:0.95em;color:#888;">
-        (Or just admire viewing my beautiful QR!)
-      </p>
     </div>
   </div>
 
@@ -354,6 +370,24 @@
       60% { transform: scale(1.1) translateY(-8px); opacity: 1; }
       100% { transform: scale(1) translateY(0); }
     }
+    .gmail-pop.custom-gmail {
+      background: #e60023;   /* Red background */
+      color: #fff;           /* White text */
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 4px 16px rgba(230,0,35,0.12);
+      animation: popGmail 1.2s cubic-bezier(.68,-0.55,.27,1.55) both;
+      transition: transform 0.2s, background 0.2s, color 0.2s;
+      cursor: pointer;
+      display: inline-block;
+      border: 2px solid #fff;
+    }
+    .gmail-pop.custom-gmail:hover {
+      background: #fff;
+      color: #e60023;
+      border: 2px solid #e60023;
+    }
   </style>
 
   <script>
@@ -367,6 +401,19 @@
     document.getElementById('bankQrPopup').onclick = function(e) {
       if (e.target === this) closeBankQr();
     };
+
+    // Fade-in on scroll
+    const faders = document.querySelectorAll('.fade-in-section');
+    function checkFade() {
+      faders.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 60) {
+          section.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', checkFade);
+    window.addEventListener('load', checkFade);
   </script>
 </body>
 </html>
