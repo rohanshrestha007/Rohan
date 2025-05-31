@@ -425,9 +425,8 @@
     chatbotInput.focus();
   };
 
-  // Replace 'https://your-backend-url/ask' with your deployed backend URL
+  // Remove backend fetch, only use local answers
 async function chatbotReply(q) {
-  // Custom answers (optional)
   const question = q.trim().toLowerCase();
   if (
     question.includes('author') ||
@@ -436,7 +435,7 @@ async function chatbotReply(q) {
     question.includes('who made') ||
     question.includes('who created')
   ) {
-    return "👨‍💻 This website was created by Rohan Shrestha (Vaidya) and help from AI!";
+    return "👨‍💻 This website was created by Rohan Shrestha and from AI!";
   }
   if (question.includes('email')) {
     return "📧 You can email me at rohanxtha970@gmail.com";
@@ -454,19 +453,133 @@ async function chatbotReply(q) {
   if (question === 'wtf') {
     return "😅 Let's keep it friendly! How can I help you?";
   }
-
-  // Ask your backend for an AI answer
-  try {
-    const res = await fetch('https://your-backend-url/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: q })
-    });
-    const data = await res.json();
-    return data.answer;
-  } catch (e) {
-    return "⚠️ Error connecting to AI service.";
+  if (question.includes('your name')) {
+    return "🤖 I'm your friendly AI assistant Rohan AI!";
   }
+  if (question.includes('how are you')) {
+    return "😊 I'm just fine, thanks for asking!";
+  }
+  if (question.includes('what can you do')) {
+    return "💡 I can answer questions about this website, Rohan, and some general info!";
+  }
+  if (question.includes('contact')) {
+    return "📧 You can contact Rohan at rohanxtha970@gmail.com or via the social links above.";
+  }
+  if (question.includes('college') || question.includes('study')) {
+    return "🎓 Rohan is a BSc.CSIT student at BMC.";
+  }
+  if (question.includes('philosophy')) {
+    return "🧠 Rohan enjoys reading philosophy in his free time!";
+  }
+  if (question.includes('music')) {
+    return "🎵 Rohan treats music like a part-time job!";
+  }
+  if (question.includes('sleep')) {
+    return "💤 Rohan is passionately committed to the ancient art of sleeping!";
+  }
+  if (question.includes('hobby') || question.includes('hobbies')) {
+    return "🎸 Rohan enjoys coding, music, philosophy, and sleeping!";
+  }
+  if (question.includes('birthday') || question.includes('born')) {
+    return "🎂 Rohan was born in Dharan, Nepal.";
+  }
+  if (question.includes('favorite color') || question.includes('favourite color')) {
+    return "🌈 Rohan likes red and black!";
+  }
+  if (question.includes('favorite food') || question.includes('favourite food')) {
+    return "🍔 Rohan loves momo and pizza!";
+  }
+  if (question.includes('best friend')) {
+    return "🤝 Rohan values all his friends equally!";
+  }
+  if (question.includes('age')) {
+    return "🗓️ Rohan is young at heart!";
+  }
+  if (question.includes('language')) {
+    return "🗣️ Rohan speaks Nepali, English, and a bit of Hindi.";
+  }
+  if (question.includes('skills')) {
+    return "💻 Rohan is skilled in programming, problem-solving, and communication.";
+  }
+  if (question.includes('goal') || question.includes('aim')) {
+    return "🎯 Rohan's goal is to grow, evolve, and help others along the way.";
+  }
+  if (question.includes('family')) {
+    return "👨‍👩‍👦 Rohan comes from a nuclear family.";
+  }
+  if (question.includes('school')) {
+    return "🏫 Rohan completed his schooling in Dharan.";
+  }
+  if (question.includes('city') || question.includes('live')) {
+    return "🏙️ Rohan lives in Dharan, Nepal.";
+  }
+  if (question.includes('fun fact')) {
+    return "😄 Fun fact: This website was made because Rohan couldn't sleep!";
+  }
+  if (question.includes('procrastinate')) {
+    return "⏳ Rohan sometimes procrastinates, but philosophy helps him stay focused!";
+  }
+  if (question.includes('ai')) {
+    return "🤖 This website uses a simple AI chatbot for fun Q&A!";
+  }
+  if (question.includes('website')) {
+    return "🌐 This website is a personal portfolio and fun project by Rohan Shrestha.";
+  }
+  if (question.includes('thanks') || question.includes('thank you')) {
+    return "🙏 You're welcome! If you have more questions, just ask!";
+  }
+  if (question.includes('joke')) {
+    return "😂 Why do programmers prefer dark mode? Because light attracts bugs!";
+  }
+  if (question.includes('quote')) {
+    return "💬 'The only true wisdom is in knowing you know nothing.' – Socrates";
+  }
+  if (question.includes('philosopher')) {
+    return "📚 Rohan likes Plato, Socrates, and other great thinkers!";
+  }
+  if (question.includes('coding') || question.includes('programming')) {
+    return "👨‍💻 Rohan codes in Python, JavaScript, and loves solving problems!";
+  }
+  if (question.includes('assignment')) {
+    return "📚 Assignments are a part of student life, and Rohan is surviving them!";
+  }
+  if (question.includes('ai assistant')) {
+    return "🤖 I'm a simple AI assistant made for this website!";
+  }
+  if (question.includes('github')) {
+    return "🔗 You can find Rohan's projects on GitHub!";
+  }
+  if (question.includes('instagram')) {
+    return "📸 Follow Rohan on Instagram: @rohanshrestha03";
+  }
+  if (question.includes('facebook')) {
+    return "👍 Connect with Rohan on Facebook: Rohanshrestha0003";
+  }
+  if (question.includes('tiktok')) {
+    return "🎵 Find Rohan on TikTok: @rohanshrestha0003";
+  }
+  if (question.includes('motivation')) {
+    return "🚀 Keep learning, keep growing!";
+  }
+  if (question.includes('favorite subject') || question.includes('favourite subject')) {
+    return "📘 Rohan enjoys Computer Science and Philosophy!";
+  }
+  if (question.includes('pet')) {
+    return "🐶 Rohan likes pets, especially dogs!";
+  }
+  if (question.includes('sports')) {
+    return "⚽ Rohan enjoys watching and sometimes playing football!";
+  }
+  if (question.includes('travel')) {
+    return "✈️ Rohan loves to travel and explore new places!";
+  }
+  if (question.includes('future')) {
+    return "🔮 The future is bright and full of possibilities!";
+  }
+  if (question.includes('ai magic')) {
+    return "✨ AI magic helped make this website more fun!";
+  }
+  return "🤖 Sorry, I can only answer basic questions about Rohan and this website! Try asking about hobbies, college, music, or philosophy!";
 }
 
 chatbotSend.onclick = async () => {
