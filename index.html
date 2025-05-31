@@ -256,6 +256,57 @@
       opacity: 1;
       transform: none;
     }
+
+    /* Chatbot styles */
+    #ai-chatbot {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 9999;
+    }
+    #chatbot-toggle {
+      background: #e60023;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 1.7em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      cursor: pointer;
+    }
+    #chatbot-window {
+      display: none;
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 260px;
+      background: #fffbe7;
+      color: #222;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      padding: 1em;
+    }
+    #chatbot-messages {
+      min-height: 60px;
+      font-size: 1em;
+      margin-bottom: 0.5em;
+    }
+    #chatbot-input {
+      width: 80%;
+      padding: 0.4em;
+      border-radius: 6px;
+      border: 1px solid #e60023;
+    }
+    #chatbot-send {
+      background: #e60023;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.4em 0.8em;
+      margin-left: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -347,51 +398,90 @@
     </div>
   </div>
 
-  <style>
-    .gmail-pop {
-      background: #fff;
-      color: #e60023;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: bold;
-      box-shadow: 0 4px 16px rgba(230,0,35,0.12);
-      animation: popGmail 1.2s cubic-bezier(.68,-0.55,.27,1.55) both;
-      transition: transform 0.2s;
-      cursor: pointer;
-      display: inline-block;
-    }
-    .gmail-pop:hover {
-      transform: scale(1.08) rotate(-2deg);
-      background: #e60023;
-      color: #fff;
-    }
-    @keyframes popGmail {
-      0% { transform: scale(0.7) translateY(30px); opacity: 0; }
-      60% { transform: scale(1.1) translateY(-8px); opacity: 1; }
-      100% { transform: scale(1) translateY(0); }
-    }
-    .gmail-pop.custom-gmail {
-      background: #e60023;   /* Red background */
-      color: #fff;           /* White text */
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: bold;
-      box-shadow: 0 4px 16px rgba(230,0,35,0.12);
-      animation: popGmail 1.2s cubic-bezier(.68,-0.55,.27,1.55) both;
-      transition: transform 0.2s, background 0.2s, color 0.2s;
-      cursor: pointer;
-      display: inline-block;
-      border: 2px solid #fff;
-    }
-    .gmail-pop.custom-gmail:hover {
-      background: #fff;
-      color: #e60023;
-      border: 2px solid #e60023;
-    }
-  </style>
+  <!-- Simple AI Q&A Chatbot -->
+<div id="ai-chatbot" style="position:fixed;bottom:80px;right:20px;z-index:9999;">
+  <button id="chatbot-toggle" style="background:#e60023;color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.7em;box-shadow:0 2px 8px rgba(0,0,0,0.18);cursor:pointer;">💬</button>
+  <div id="chatbot-window" style="display:none;position:absolute;bottom:60px;right:0;width:260px;background:#fffbe7;color:#222;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.18);padding:1em;">
+    <button class="close-btn" onclick="chatbotWindow.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <line x1="6" y1="6" x2="18" y2="18" stroke="#e60023" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18" y1="6" x2="6" y2="18" stroke="#e60023" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div id="chatbot-messages" style="min-height:60px;font-size:1em;margin-bottom:0.5em;">Ask me something!</div>
+    <input id="chatbot-input" type="text" placeholder="Type your question..." style="width:80%;padding:0.4em;border-radius:6px;border:1px solid #e60023;">
+    <button id="chatbot-send" style="background:#e60023;color:#fff;border:none;border-radius:6px;padding:0.4em 0.8em;margin-left:4px;cursor:pointer;">Send</button>
+  </div>
+</div>
+<script>
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const chatbotInput = document.getElementById('chatbot-input');
+  const chatbotSend = document.getElementById('chatbot-send');
+  const chatbotMessages = document.getElementById('chatbot-messages');
 
-  <script>
-    document.querySelector('.bank-qr-btn').onclick = function() {
+  chatbotToggle.onclick = () => {
+    chatbotWindow.style.display = chatbotWindow.style.display === 'none' ? 'block' : 'none';
+    chatbotInput.focus();
+  };
+
+  // Replace 'https://your-backend-url/ask' with your deployed backend URL
+async function chatbotReply(q) {
+  // Custom answers (optional)
+  const question = q.trim().toLowerCase();
+  if (
+    question.includes('author') ||
+    question.includes('developer') ||
+    question.includes('dev') ||
+    question.includes('who made') ||
+    question.includes('who created')
+  ) {
+    return "👨‍💻 This website was created by Rohan Shrestha (Vaidya) and help from AI!";
+  }
+  if (question.includes('email')) {
+    return "📧 You can email me at rohanxtha970@gmail.com";
+  }
+  if (question.includes('where are you from') || question.includes('hometown')) {
+    return "🏡 I'm from Dharan, Nepal!";
+  }
+  if (
+    question === 'hello' ||
+    question === 'hi' ||
+    question === 'hey'
+  ) {
+    return "👋 Hello! How can I help you?";
+  }
+  if (question === 'wtf') {
+    return "😅 Let's keep it friendly! How can I help you?";
+  }
+
+  // Ask your backend for an AI answer
+  try {
+    const res = await fetch('https://your-backend-url/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: q })
+    });
+    const data = await res.json();
+    return data.answer;
+  } catch (e) {
+    return "⚠️ Error connecting to AI service.";
+  }
+}
+
+chatbotSend.onclick = async () => {
+  const q = chatbotInput.value;
+  if (!q) return;
+  chatbotMessages.innerHTML = `<span style="color:#e60023;">You:</span> ${q}<br><span style="color:#222;">AI:</span> ...`;
+  chatbotInput.value = '';
+  const answer = await chatbotReply(q);
+  chatbotMessages.innerHTML = `<span style="color:#e60023;">You:</span> ${q}<br><span style="color:#222;">AI:</span> ${answer}`;
+};
+chatbotInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') chatbotSend.click();
+});
+
+  document.querySelector('.bank-qr-btn').onclick = function() {
       document.getElementById('bankQrPopup').classList.add('active');
     };
     function closeBankQr() {
@@ -414,6 +504,6 @@
     }
     window.addEventListener('scroll', checkFade);
     window.addEventListener('load', checkFade);
-  </script>
+</script>
 </body>
 </html>
