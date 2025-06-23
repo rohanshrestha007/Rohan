@@ -666,45 +666,73 @@
       .nav-link {
         font-size: 0.8rem;
       }
+      #ai-chatbot {
+        left: 4px;   /* Move chat icon further left */
+        right: auto;
+        bottom: 16px;
+      }
       #chatbot-window {
-        width: 98vw;
-        max-width: 98vw;
+        left: 4px;   /* Move chat window further left */
+        right: auto;
+        width: 92vw; /* Make chat window a bit narrower */
+        max-width: 92vw;
         min-width: unset;
-        right: 1vw;
-        left: 1vw;
-        margin: 0 auto;
-        padding: 0.7rem 0.5rem 0.5rem 0.5rem;
-        bottom: 70px;
-        border-radius: 14px;
+        margin: 0;
+        padding: 0.5rem 0.3rem 0.3rem 0.3rem;
+        bottom: 64px;
+        border-radius: 12px;
+        box-sizing: border-box;
+        height: 54vh;
+        max-height: 62vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
       }
       #chatbot-messages {
-        min-height: 120px;
-        max-height: 180px;
-        font-size: 0.92rem;
-        padding: 0.5rem;
+        min-height: 60px;
+        max-height: 100%;
+        font-size: 0.9rem;
+        padding: 0.3rem;
+        overflow-y: auto;
+        flex: 1 1 auto;
+        width: 100%;
       }
       .chat-input-container {
-        flex-direction: column;
-        gap: 0.4rem;
+        flex-direction: row;
+        gap: 0.2rem;
+        align-items: center;
+        width: 100%;
+        margin-top: 0.2rem;
+        flex-shrink: 0;
       }
       #chatbot-input {
-        font-size: 0.98rem;
-        padding: 0.6rem 0.8rem;
-        width: 100%;
+        font-size: 0.95rem;
+        padding: 0.5rem 0.7rem;
+        width: 75%;
         min-width: 0;
-        border-radius: 22px;
+        border-radius: 20px;
+        border: 1px solid #e60023;
+        box-sizing: border-box;
       }
       #chatbot-send {
-        width: 100%;
-        padding: 0.6rem 0;
-        font-size: 1rem;
-        border-radius: 22px;
+        width: 38px;
+        min-width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
         justify-content: center;
+        background: #e60023;
+        color: #fff;
+        border: none;
+        margin-left: 0.1rem;
+        font-size: 1.1rem;
+        transition: background 0.2s;
       }
-      .close-btn {
-        top: 8px;
-        right: 8px;
-        font-size: 1.2rem;
+      #chatbot-send:hover {
+        background: #b3001b;
       }
     }
     
@@ -881,7 +909,11 @@
       </div>
       <div class="chat-input-container">
         <input id="chatbot-input" type="text" placeholder="Type your question...">
-        <button id="chatbot-send">Send</button>
+        <button id="chatbot-send" aria-label="Send">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M3 12h15M15 12l-6-6m6 6l-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
     </div>
   </div>
